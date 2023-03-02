@@ -1,1 +1,39 @@
-<p>login works!</p>
+<div class="signup-container">
+  <h1>Login</h1>
+  <form class="signup-form" #form="ngForm" (ngSubmit)="onSubmitLogin(form)">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your email</mat-label>
+      <input
+        ngModel
+        name="email"
+        #emailField="ngModel"
+        matInput
+        required
+        email>
+      <mat-error *ngIf="!emailField.hasError('required')">Email format is invalid.</mat-error>
+      <mat-error *ngIf="emailField.hasError('required')">Email field is mandatory.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill" hintLabel="Password needs to be at least 8 characters long">
+      <mat-label>Enter your password</mat-label>
+      <input
+        ngModel
+        name="password"
+        required
+        minlength="8"
+        matInput
+        #passwordField="ngModel"
+        [type]="hide ? 'password' : 'text'">
+      <mat-hint align="end">{{ passwordField.value?.length }} / 8</mat-hint>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+      [disabled]="!form.valid"
+      type="submit"
+      class="submit-button"
+      mat-raised-button color="primary">
+        Login
+    </button>
+  </form>
+</div>

@@ -1,0 +1,39 @@
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.signup-container h1 {
+  color: purple;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.signup-form mat-form-field {
+  margin-bottom: 15px;
+}
+
+.submit-button {
+  margin-top: 25px;
+  margin-bottom: 50px;
+  width: 25%;
+  align-self: center;
+}
+
+@media screen and (max-width: 720px) {
+  .signup-form {
+    width: 80%;
+  }
+  .submit-button {
+    width: 50%;
+    align-self: center;
+  }
+}

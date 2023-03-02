@@ -77,12 +77,18 @@
     </mat-form-field>
     <mat-checkbox
       ngModel
+      required
       name="termsAndConditions"
       class="form-checkbox">
         I accept Terms and Policies.
     </mat-checkbox>
-    <button type="submit" class="submit-button" mat-raised-button color="primary">
-      Sign Up
+    <button
+      type="submit"
+      class="submit-button"
+      mat-raised-button
+      color="primary"
+      [disabled]="!form.valid">
+        Sign Up
     </button>
   </form>
 </div>
