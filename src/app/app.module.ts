@@ -12,6 +12,7 @@ import { CurrentRunningComponent } from './components/running/current-running/cu
 import { NewRunningComponent } from './components/running/new-running/new-running.component';
 import { HistoryRunningComponent } from './components/running/history-running/history-running.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
