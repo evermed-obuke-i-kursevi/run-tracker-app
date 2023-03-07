@@ -1,0 +1,26 @@
+<mat-nav-list>
+  <mat-list-item role="listitem">
+    <a (click)="closeSideNav.emit()" routerLink="/signup">
+      <mat-icon>person_add</mat-icon>
+      <span class="nav-caption">Signup</span>
+    </a>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <a (click)="closeSideNav.emit()" routerLink="/login">
+      <mat-icon>login</mat-icon>
+      <span class="nav-caption">Login</span>
+    </a>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <a (click)="closeSideNav.emit()" routerLink="/running">
+      <mat-icon>directions_run</mat-icon>
+      <span class="nav-caption">Run</span>
+    </a>
+  </mat-list-item>
+  <mat-list-item role="listitem">
+    <a (click)="closeSideNav.emit()">
+      <mat-icon>logout</mat-icon>
+      <span class="nav-caption">Logout</span>
+    </a>
+  </mat-list-item>
+</mat-nav-list>

@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <div class="toggle-btn-wrapper">
+    <button (click)="toggleSideNav.emit()" mat-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div class="logo-wrapper">
+    Logo_IMG
+  </div>
+  <div class="nav-items-wrapper">
+    <a routerLink="/signup">Signup</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/running">Running</a>
+    <a>Logout</a>
+  </div>
+</mat-toolbar>

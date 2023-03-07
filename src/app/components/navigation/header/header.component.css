@@ -1,0 +1,56 @@
+.mat-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.mat-icon {
+  width: 50px;
+}
+
+.nav-items-wrapper {
+  width: 30%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.nav-items-wrapper a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease;
+}
+
+.nav-items-wrapper a:hover {
+  color: bisque;
+  transition: 0.3s ease;
+}
+
+.nav-items-wrapper a:hover {
+  color: bisque;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+mat-nav-list a {
+  text-decoration: none;
+  color: black;
+}
+
+@media screen and (max-width: 720px) {
+  .mat-toolbar {
+    justify-content: space-between;
+  }
+  .nav-items-wrapper {
+    display: none;
+  }
+}
+
+
+@media screen and (min-width: 721px) {
+  .toggle-btn-wrapper,
+  .mat-sidenav {
+    display: none;
+  }
+}

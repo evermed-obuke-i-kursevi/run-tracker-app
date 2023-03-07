@@ -13,6 +13,8 @@ import { NewRunningComponent } from './components/running/new-running/new-runnin
 import { HistoryRunningComponent } from './components/running/history-running/history-running.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/navigation/header/header.component';
+import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { FormsModule } from '@angular/forms';
     CurrentRunningComponent,
     NewRunningComponent,
     HistoryRunningComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
