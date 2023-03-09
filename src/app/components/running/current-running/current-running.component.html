@@ -1,1 +1,10 @@
-<p>current-running works!</p>
+<div class="current-running-wrapper">
+  <mat-progress-spinner [value]="progress" mode="determinate">
+
+  </mat-progress-spinner>
+
+  <h3>Run Progress</h3>
+  <h4>{{ progress }} %</h4>
+  <p>{{ message }}</p>
+  <button (click)="openCancelDialog()" mat-raised-button color="warn">Stop</button>
+</div>

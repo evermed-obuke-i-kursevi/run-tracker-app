@@ -38,6 +38,11 @@ mat-nav-list a {
   color: black;
 }
 
+.logo-wrapper a {
+  text-decoration: none;
+  color: white;
+}
+
 @media screen and (max-width: 720px) {
   .mat-toolbar {
     justify-content: space-between;

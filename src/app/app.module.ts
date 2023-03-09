@@ -15,6 +15,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { StopRunningComponent } from './components/dialogs/stop-running/stop-running.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
     HistoryRunningComponent,
     WelcomeComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    StopRunningComponent
   ],
   imports: [
     BrowserModule,

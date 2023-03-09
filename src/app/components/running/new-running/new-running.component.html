@@ -1,1 +1,31 @@
-<p>new-running works!</p>
+<mat-card class="new-run-card">
+  <mat-card-header>
+    <mat-card-title>Start New Running</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Running mode</mat-label>
+      <mat-select name="runMode">
+        <mat-option value="jogging">
+          Jogging
+        </mat-option>
+        <mat-option value="sprint">
+          Sprint
+        </mat-option>
+        <mat-option value="hiit">
+          HIIT
+        </mat-option>
+        <mat-option value="hiking">
+          Hiking
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p>Please select desired running mode to start.</p>
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="startRunning()" mat-raised-button color="primary">
+      Start
+    </button>
+  </mat-card-actions>
+</mat-card>

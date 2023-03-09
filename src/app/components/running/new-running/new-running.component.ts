@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-new-running',
@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./new-running.component.css']
 })
 export class NewRunningComponent {
+
+  @Output() newRunStarted = new EventEmitter();
+
+  startRunning() {
+    this.newRunStarted.emit();
+  }
 
 }

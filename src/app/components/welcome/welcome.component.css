@@ -1,0 +1,29 @@
+.welcome-wrapper {
+  background-image: url('../../../assets/images/home-banner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 95vh;
+  min-width: 100%;
+}
+
+.welcome-wrapper-cta {
+  text-align: center;
+}
+
+.welcome-wrapper-cta button {
+  margin-top: 15%;
+  width: 140px;
+  height: 90px;
+  font-size: 22px;
+  text-transform: uppercase;
+  opacity: 90%;
+}
+
+@media screen and (max-width: 720px) {
+  .welcome-wrapper {
+    background-position-x: center;
+  }
+  .welcome-wrapper-cta button {
+    margin-top: 300px;
+  }
+}

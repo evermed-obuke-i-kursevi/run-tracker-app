@@ -1,0 +1,24 @@
+.new-run-card {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 50%;
+  text-align: left;
+}
+
+.new-run-card mat-card-actions {
+  margin: 0 auto;
+}
+
+.new-run-card mat-card-actions button {
+  font-size: 17px;
+}
+
+mat-card-title {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 720px) {
+  .new-run-card {
+    width: 95%;
+  }
+}
