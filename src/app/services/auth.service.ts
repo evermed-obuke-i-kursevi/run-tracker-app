@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthData } from '../models/auth-data';
@@ -12,7 +13,8 @@ export class AuthService {
   private user: User | null;
   public authChange = new Subject<boolean>();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private snackBar: MatSnackBar) { }
 
   /**
    * @description Method for logging user in
@@ -24,7 +26,7 @@ export class AuthService {
       userId: Math.round(Math.random() * 10000).toString(),
       email: authData.email
     }
-    this.authSuccessfully();
+    this.authSuccessfully(`You have successfully logged in!`);
   }
 
 
@@ -38,7 +40,7 @@ export class AuthService {
       userId: Math.round(Math.random() * 10000).toString(),
       email: authData.email
     }
-    this.authSuccessfully();
+    this.authSuccessfully(`You have successfully created new account!`);
   }
 
   /**
@@ -48,6 +50,9 @@ export class AuthService {
     this.user = null;
     this.authChange.next(false);
     this.router.navigate(['/login']);
+    this.snackBar.open(`You have successfully logged out!`, 'Close', {
+      duration: 3000
+    });
   }
 
   /**
@@ -60,10 +65,14 @@ export class AuthService {
 
   /**
    * @description Method called when user authenticates successfully
+   * @param {string} message - message for snack bar popup
    */
-  authSuccessfully() {
+  authSuccessfully(message: string) {
     this.authChange.next(true);
     this.router.navigate(['/running']);
+    this.snackBar.open(message, 'Close', {
+      duration: 3000
+    });
   }
 
   /**

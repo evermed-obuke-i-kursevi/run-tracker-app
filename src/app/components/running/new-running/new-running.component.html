@@ -6,17 +6,8 @@
     <mat-form-field appearance="outline">
       <mat-label>Running mode</mat-label>
       <mat-select name="runMode">
-        <mat-option value="jogging">
-          Jogging
-        </mat-option>
-        <mat-option value="sprint">
-          Sprint
-        </mat-option>
-        <mat-option value="hiit">
-          HIIT
-        </mat-option>
-        <mat-option value="hiking">
-          Hiking
+        <mat-option *ngFor="let running of availableRunnings" [value]="running.id">
+          {{running.title}} ({{running.duration}} min)
         </mat-option>
       </mat-select>
     </mat-form-field>

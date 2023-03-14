@@ -1,5 +1,5 @@
 export interface Run {
-  runId: string;
+  id: string;
   title: string;
   duration: number;
   calories: number;
