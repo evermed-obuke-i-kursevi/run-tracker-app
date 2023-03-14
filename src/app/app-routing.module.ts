@@ -4,12 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { RunningComponent } from './components/running/running.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {path: '', component: WelcomeComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'running', component: RunningComponent}
+  {path: 'running', component: RunningComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

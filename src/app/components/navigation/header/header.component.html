@@ -8,9 +8,9 @@
     <a routerLink="/">Run Tracker</a>
   </div>
   <div class="nav-items-wrapper">
-    <a routerLink="/signup">Signup</a>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/running">Running</a>
-    <a>Logout</a>
+    <a *ngIf="!isAuth" routerLink="/signup">Signup</a>
+    <a *ngIf="!isAuth" routerLink="/login">Login</a>
+    <a *ngIf="isAuth" routerLink="/running">Running</a>
+    <a *ngIf="isAuth" (click)="onLogout()" >Logout</a>
   </div>
 </mat-toolbar>

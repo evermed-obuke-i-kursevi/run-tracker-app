@@ -10,7 +10,7 @@
 }
 
 .nav-items-wrapper {
-  width: 30%;
+  width: 160px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
