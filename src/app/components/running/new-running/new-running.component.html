@@ -3,20 +3,22 @@
     <mat-card-title>Start New Running</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-form-field appearance="outline">
-      <mat-label>Running mode</mat-label>
-      <mat-select name="runMode">
-        <mat-option *ngFor="let running of availableRunnings" [value]="running.id">
-          {{running.title}} ({{running.duration}} min)
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <p>Please select desired running mode to start.</p>
-    <mat-divider></mat-divider>
+    <form class="new-run-form" #form="ngForm" (ngSubmit)="startRunning(form)">
+      <mat-form-field appearance="outline">
+        <mat-label>Running mode</mat-label>
+        <mat-select name="runMode" ngModel required>
+          <mat-option *ngFor="let running of availableRunnings" [value]="running.id">
+            {{running.title}} ({{running.duration}} min)
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p>Please select desired running mode to start.</p>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button [disabled]="!form.valid" type="submit" mat-raised-button color="primary">
+          Start
+        </button>
+      </mat-card-actions>
+    </form>
   </mat-card-content>
-  <mat-card-actions>
-    <button (click)="startRunning()" mat-raised-button color="primary">
-      Start
-    </button>
-  </mat-card-actions>
 </mat-card>
