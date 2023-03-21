@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, Subject } from 'rxjs';
 import { Run } from '../models/running';
 
 @Injectable({
@@ -7,18 +8,54 @@ import { Run } from '../models/running';
 })
 export class RunningService {
 
-  // Mock niz dostupnih sesija trcanja
-  private availableRunnings: Run[] = [
-    {id: '1', title: 'Jogging', duration: 20, calories: 300},
-    {id: '2', title: 'Hiking', duration: 60, calories: 150},
-    {id: '3', title: 'Sprint', duration: 1, calories: 100},
-    {id: '4', title: 'HIIT', duration: 10, calories: 350}
-  ]
+  private availableRunnings: Run[];
+  public availableRunningsChanged = new Subject<Run[]>();
+  // ! Mock niz dostupnih sesija trcanja
+  // private availableRunnings: Run[] = [
+  //   {id: '1', title: 'Jogging', duration: 20, calories: 300},
+  //   {id: '2', title: 'Hiking', duration: 60, calories: 150},
+  //   {id: '3', title: 'Sprint', duration: 1, calories: 100},
+  //   {id: '4', title: 'HIIT', duration: 10, calories: 350}
+  // ]
   private runningStarted: Run | undefined | null;
   public runningChange = new Subject<any>();
   private pastRunnings: any[] = [];
 
-  constructor() { }
+  constructor(private db: AngularFirestore) { }
+
+  /**
+   * @description Method for fetching all available running sessions from Firestore DB
+   */
+  fetchAvailableRunnings() {
+    this.db
+      .collection('availableRunnings')
+      .snapshotChanges()
+      .pipe(map(docArray => {
+        console.log(docArray);
+        return docArray.map((doc) => {
+          let item = doc.payload.doc.data() as any;
+          return {
+            id: doc.payload.doc['id'],
+            ...item
+          }
+        })
+      }))
+      .subscribe((dataFromDB: Run[]) => {
+        this.availableRunnings = dataFromDB;
+        this.availableRunningsChanged.next([...this.availableRunnings]);
+      });
+  }
+
+  /**
+   * @description Method for creating new running session in History collection
+   * @param {Run} running - completed/stopped running session
+   */
+  private createRunningInDB(running: any) {
+    this.db
+      .collection('runningHistory')
+      .add(running)
+      .then(response => console.log(response));
+  }
 
   /**
    * @description Method for handling running session start
@@ -41,6 +78,7 @@ export class RunningService {
       date: new Date(),
       state: 'completed'
     }
+    this.createRunningInDB(runCompleted);
     console.log(`Uspeh `, runCompleted);
     this.pastRunnings.push(runCompleted);
     this.runningStarted = null;
@@ -64,6 +102,7 @@ export class RunningService {
       duration: durationDone,
       calories: caloriesBurned
     }
+    this.createRunningInDB(runStopped);
     this.runningStarted = null;
     this.runningChange.next(null);
     this.pastRunnings.push(runStopped);

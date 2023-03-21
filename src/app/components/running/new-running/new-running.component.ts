@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Run } from 'src/app/models/running';
 import { RunningService } from 'src/app/services/running.service';
 
@@ -8,10 +9,11 @@ import { RunningService } from 'src/app/services/running.service';
   templateUrl: './new-running.component.html',
   styleUrls: ['./new-running.component.css']
 })
-export class NewRunningComponent {
+export class NewRunningComponent implements OnInit, OnDestroy {
 
   // @Output() newRunStarted = new EventEmitter();
   availableRunnings: Run[];
+  availableRunningsSubscription: Subscription;
 
   constructor(private runningService: RunningService) {
 
@@ -29,7 +31,16 @@ export class NewRunningComponent {
   }
 
   ngOnInit() {
-    this.availableRunnings = this.runningService.getAvailableRunnings();
+    // this.availableRunnings = this.runningService.getAvailableRunnings();
+    this.availableRunningsSubscription = this.runningService.availableRunningsChanged
+      .subscribe(data => {
+        this.availableRunnings = data;
+      });
+    this.runningService.fetchAvailableRunnings();
+  }
+
+  ngOnDestroy() {
+    this.availableRunningsSubscription.unsubscribe();
   }
 
 }
