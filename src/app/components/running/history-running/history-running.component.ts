@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
 import { Run } from 'src/app/models/running';
 import { RunningService } from 'src/app/services/running.service';
 
@@ -10,13 +11,14 @@ import { RunningService } from 'src/app/services/running.service';
   templateUrl: './history-running.component.html',
   styleUrls: ['./history-running.component.css']
 })
-export class HistoryRunningComponent implements OnInit, AfterViewInit {
+export class HistoryRunningComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumns = ['title', 'date', 'duration', 'calories', 'state'];
   dataSource = new MatTableDataSource<Run>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   paginationSize: number;
+  pastRunningsSubscription: Subscription;
 
   constructor(private runningService: RunningService) {
 
@@ -33,14 +35,22 @@ export class HistoryRunningComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    const historyData = this.runningService.getRunningHistory();
-    this.dataSource.data = historyData;
-    this.paginationSize = this.dataSource.data.length;
+    // const historyData = this.runningService.getRunningHistory();
+    this.pastRunningsSubscription = this.runningService.pastRunningsChanged
+      .subscribe((data: Run[]) => {
+        this.dataSource.data = data;
+        this.paginationSize = this.dataSource.data.length;
+      });
+    this.runningService.fetchPastRunnings();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnDestroy() {
+    this.pastRunningsSubscription.unsubscribe();
   }
 
 }

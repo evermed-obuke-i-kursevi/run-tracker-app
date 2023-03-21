@@ -10,6 +10,7 @@ export class RunningService {
 
   private availableRunnings: Run[];
   public availableRunningsChanged = new Subject<Run[]>();
+  public pastRunningsChanged = new Subject<Run[]>();
   // ! Mock niz dostupnih sesija trcanja
   // private availableRunnings: Run[] = [
   //   {id: '1', title: 'Jogging', duration: 20, calories: 300},
@@ -43,6 +44,28 @@ export class RunningService {
       .subscribe((dataFromDB: Run[]) => {
         this.availableRunnings = dataFromDB;
         this.availableRunningsChanged.next([...this.availableRunnings]);
+      });
+  }
+
+  /**
+   * @description Method for fetching history of running sessions from Firestore DB
+   */
+  public fetchPastRunnings() {
+    this.db
+      .collection('runningHistory')
+      .snapshotChanges()
+      .pipe(map(docArray => {
+        return docArray.map((doc) => {
+          let item = doc.payload.doc.data() as any;
+          return {
+            id: doc.payload.doc['id'],
+            ...item
+          };
+        })
+      }))
+      .subscribe((dataFromDB: Run[]) => {
+        this.pastRunnings = dataFromDB;
+        this.pastRunningsChanged.next([...this.pastRunnings]);
       });
   }
 
