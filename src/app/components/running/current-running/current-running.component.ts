@@ -10,7 +10,7 @@ import { StopRunningComponent } from '../../dialogs/stop-running/stop-running.co
 })
 export class CurrentRunningComponent implements OnInit {
 
-  @Output() runStopped = new EventEmitter();
+  // @Output() runStopped = new EventEmitter(); // ! not needed anymore
   progress = 0;
   timer: any;
   message = `Don't give up, you can do it!`;
@@ -48,6 +48,7 @@ export class CurrentRunningComponent implements OnInit {
    * @description Method for opening and passing data to cancel dialog
    */
   openCancelDialog() {
+    clearInterval(this.timer);
     const dialogRef = this.dialog.open(StopRunningComponent, {
       data: {
         progress: this.progress
@@ -58,13 +59,11 @@ export class CurrentRunningComponent implements OnInit {
       .afterClosed()
       .subscribe(result => {
         if (result === true) {
-          this.runStopped.emit();
           this.runningService.stopRun(this.progress);
         } else {
           this.startOrResumeTimer();
         }
-      })
-
+    });
   }
 
 }

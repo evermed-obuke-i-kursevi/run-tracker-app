@@ -84,6 +84,14 @@ export class RunningService {
    * @description Method for handling running session start
    */
   startRun(runId: string) {
+    // ? Zakomentarisani kod ispod je primer update-a u DB-u
+    // this.db
+    //   .doc(`/availableRunnings/${runId}`)
+    //   .update({
+    //     inProgress: true
+    //   })
+    //   .then(response => console.log(response))
+    //   .catch(e => console.log(e));
     console.log(`Usao u servis sa IDem ${runId}`);
     console.log(typeof runId);
     this.runningStarted = this.availableRunnings.find(running => {
