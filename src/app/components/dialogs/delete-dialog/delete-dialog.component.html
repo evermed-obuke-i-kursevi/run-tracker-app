@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Item(s) removing</h1>
+<div mat-dialog-content>
+  <p *ngIf="passedDataToDialog.id">
+    You are about to remove this item from your history. Please confirm.
+  </p>
+  <p *ngIf="!passedDataToDialog.id">
+    You are about to remove all items from your history. Please confirm.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]=false cdkFocusInitial>Cancel</button>
+  <button mat-button [mat-dialog-close]=true>Submit</button>
+</div>

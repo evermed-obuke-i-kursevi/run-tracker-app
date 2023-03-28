@@ -5,4 +5,6 @@ export interface Run {
   calories: number;
   date?: Date;
   state?: 'completed' | 'stopped' | null;
+  userId?: string;
+  historyId?: string;
 }

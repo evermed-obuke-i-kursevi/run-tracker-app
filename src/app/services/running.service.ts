@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { map, Subject } from 'rxjs';
 import { Run } from '../models/running';
 
@@ -22,7 +23,8 @@ export class RunningService {
   public runningChange = new Subject<any>();
   private pastRunnings: any[] = [];
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore,
+              private matSnackBar: MatSnackBar) { }
 
   /**
    * @description Method for fetching all available running sessions from Firestore DB
@@ -51,8 +53,12 @@ export class RunningService {
    * @description Method for fetching history of running sessions from Firestore DB
    */
   public fetchPastRunnings() {
+    const userId = localStorage.getItem('currentUserId');
     this.db
-      .collection('runningHistory')
+      .collection(
+        'runningHistory',
+        ref => ref.where('userId', '==', userId)
+      )
       .snapshotChanges()
       .pipe(map(docArray => {
         return docArray.map((doc) => {
@@ -77,7 +83,63 @@ export class RunningService {
     this.db
       .collection('runningHistory')
       .add(running)
-      .then(response => console.log(response));
+      .then(doc => {
+        const docId = doc.id;
+        this.db
+          .collection('runningHistory')
+          .doc(docId)
+          .update({
+            'historyId': docId
+          })
+          .catch(e => {
+            this.matSnackBar.open(e.message, `Close`);
+          });
+      });
+  }
+
+  /**
+   * @description Method for deleting complete history of running sessions for logged user
+   */
+  deleteAllForUser() {
+    const userId = localStorage.getItem('currentUserId');
+    let runningHistoryQuery = this.db.collection(
+      'runningHistory',
+      ref => ref.where('userId', '==', userId)
+    );
+    runningHistoryQuery
+      .get()
+      .subscribe(docs => {
+        docs.forEach((doc) => {
+          doc.ref.delete()
+            .then(() => {
+              this.matSnackBar.open(`Your history has been emptied!`, `Close`, {
+                duration: 2000
+              })
+            })
+            .catch(e => {
+              this.matSnackBar.open(e.message, `Close`, {
+                duration: 2000
+              })
+            })
+        })
+      });
+  }
+
+  /**
+   * @description Method for deleting single item of running session for logged user
+   * @param {string} id - id of document to delete
+   */
+  deleteOne(id: string) {
+    this.db
+      .collection('runningHistory')
+      .doc(id)
+      .delete()
+      .then(() => {
+        this.matSnackBar.open(`Item deleted`, `Close` , {
+          duration: 2000
+        })
+      })
+      .catch(e => this.matSnackBar.open(e.message, 'Close'));
   }
 
   /**
@@ -104,10 +166,12 @@ export class RunningService {
    * @description Method for handling successfully completed running session
   */
   completeRun() {
+    const userId = localStorage.getItem('currentUserId'); // nije asinhrona operacija
     const runCompleted = {
       ...this.runningStarted,
       date: new Date(),
-      state: 'completed'
+      state: 'completed',
+      userId
     }
     this.createRunningInDB(runCompleted);
     console.log(`Uspeh `, runCompleted);
@@ -120,6 +184,7 @@ export class RunningService {
    * @description Method for stopping running session
    */
   stopRun(progress: number) {
+    const userId = localStorage.getItem('currentUserId');
     const durationDone = this.runningStarted
       ? (this.runningStarted.duration) * (progress / 100)
       : 0;
@@ -131,7 +196,8 @@ export class RunningService {
       date: new Date(),
       state: 'stopped',
       duration: durationDone,
-      calories: caloriesBurned
+      calories: caloriesBurned.toFixed(2),
+      userId
     }
     this.createRunningInDB(runStopped);
     this.runningStarted = null;

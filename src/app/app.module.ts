@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 import { StopRunningComponent } from './components/dialogs/stop-running/stop-running.component';
+import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete-dialog.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { StopRunningComponent } from './components/dialogs/stop-running/stop-run
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StopRunningComponent
+    StopRunningComponent,
+    DeleteDialogComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

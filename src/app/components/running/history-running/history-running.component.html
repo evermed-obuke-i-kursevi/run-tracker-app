@@ -32,6 +32,19 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>State</mat-header-cell>
       <mat-cell *matCellDef="let row" [style.color]="row.state === 'completed' ? 'green' : 'red'">{{ row.state }}</mat-cell>
     </ng-container>
+    <!-- Action Buttons -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button #tooltip="matTooltip" matTooltip="Delete all items" (click)="openDialog(1)" mat-icon-button color="primary">
+          <mat-icon aria-label="Delete All">delete_forever</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button #tooltip="matTooltip" matTooltip="Delete item" (click)="openDialog(2, row.historyId)" mat-icon-button color="warn">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row
       style="cursor: pointer;"

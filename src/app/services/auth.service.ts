@@ -44,6 +44,7 @@ export class AuthService {
     try {
       const response = await this.authFirestore.signInWithEmailAndPassword(authData.email, authData.password)
       console.log(response);
+      localStorage.setItem('currentUserId', response.user?.uid as string);
       this.authSuccessfully(`You have successfully logged in.`);
     } catch (error: any) {
       console.log(error);
@@ -60,6 +61,7 @@ export class AuthService {
     try {
       const response = await this.authFirestore.createUserWithEmailAndPassword(authData.email, authData.password);
       console.log(response);
+      localStorage.setItem('currentUserId', response.user?.uid as string);
       this.authSuccessfully(`Dear ${authData.email}, your account is successfully created!`)
     } catch (error: any) {
       console.log(error);
@@ -73,6 +75,7 @@ export class AuthService {
    */
   logout() {
     this.authFirestore.signOut();
+    localStorage.removeItem('currentUserId');
     this.isAuthenticated = false;
     this.authChange.next(false);
     this.router.navigate(['/login']);
