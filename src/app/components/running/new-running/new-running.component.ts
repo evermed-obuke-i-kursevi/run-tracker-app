@@ -11,7 +11,6 @@ import { RunningService } from 'src/app/services/running.service';
 })
 export class NewRunningComponent implements OnInit, OnDestroy {
 
-  // @Output() newRunStarted = new EventEmitter();
   availableRunnings: Run[];
   availableRunningsSubscription: Subscription;
 
@@ -24,14 +23,11 @@ export class NewRunningComponent implements OnInit, OnDestroy {
    * @param {NgForm} form - form
    */
   startRunning(form: NgForm) {
-    console.log(form);
     const runModeId = form.value.runMode;
     this.runningService.startRun(runModeId);
-    // this.newRunStarted.emit();
   }
 
   ngOnInit() {
-    // this.availableRunnings = this.runningService.getAvailableRunnings();
     this.availableRunningsSubscription = this.runningService.availableRunningsChanged
       .subscribe(data => {
         this.availableRunnings = data;

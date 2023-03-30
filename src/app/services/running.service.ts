@@ -12,13 +12,6 @@ export class RunningService {
   private availableRunnings: Run[];
   public availableRunningsChanged = new Subject<Run[]>();
   public pastRunningsChanged = new Subject<Run[]>();
-  // ! Mock niz dostupnih sesija trcanja
-  // private availableRunnings: Run[] = [
-  //   {id: '1', title: 'Jogging', duration: 20, calories: 300},
-  //   {id: '2', title: 'Hiking', duration: 60, calories: 150},
-  //   {id: '3', title: 'Sprint', duration: 1, calories: 100},
-  //   {id: '4', title: 'HIIT', duration: 10, calories: 350}
-  // ]
   private runningStarted: Run | undefined | null;
   public runningChange = new Subject<any>();
   private pastRunnings: any[] = [];
@@ -34,7 +27,6 @@ export class RunningService {
       .collection('availableRunnings')
       .snapshotChanges()
       .pipe(map(docArray => {
-        console.log(docArray);
         return docArray.map((doc) => {
           let item = doc.payload.doc.data() as any;
           return {
@@ -146,16 +138,6 @@ export class RunningService {
    * @description Method for handling running session start
    */
   startRun(runId: string) {
-    // ? Zakomentarisani kod ispod je primer update-a u DB-u
-    // this.db
-    //   .doc(`/availableRunnings/${runId}`)
-    //   .update({
-    //     inProgress: true
-    //   })
-    //   .then(response => console.log(response))
-    //   .catch(e => console.log(e));
-    console.log(`Usao u servis sa IDem ${runId}`);
-    console.log(typeof runId);
     this.runningStarted = this.availableRunnings.find(running => {
       return running.id === runId;
     });
@@ -166,7 +148,7 @@ export class RunningService {
    * @description Method for handling successfully completed running session
   */
   completeRun() {
-    const userId = localStorage.getItem('currentUserId'); // nije asinhrona operacija
+    const userId = localStorage.getItem('currentUserId');
     const runCompleted = {
       ...this.runningStarted,
       date: new Date(),
@@ -174,7 +156,6 @@ export class RunningService {
       userId
     }
     this.createRunningInDB(runCompleted);
-    console.log(`Uspeh `, runCompleted);
     this.pastRunnings.push(runCompleted);
     this.runningStarted = null;
     this.runningChange.next(null);

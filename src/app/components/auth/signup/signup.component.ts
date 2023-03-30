@@ -17,7 +17,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmitSignup(form: NgForm) {
-    console.log(form);
     const {email, password} = form.value;
     const authData = {
       email,
@@ -32,8 +31,7 @@ export class SignupComponent implements OnInit {
       today.getFullYear() - 18,
       today.getMonth(),
       today.getDay()
-    )
-    console.log(this.maxDate);
+    );
   }
 
 }

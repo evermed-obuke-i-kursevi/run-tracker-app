@@ -22,6 +22,7 @@ import { HeaderComponent } from './components/navigation/header/header.component
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 import { StopRunningComponent } from './components/dialogs/stop-running/stop-running.component';
 import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete-dialog.component';
+import { FormatTimePipe } from './pipes/format-time.pipe';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete
     HeaderComponent,
     SidenavListComponent,
     StopRunningComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    FormatTimePipe
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

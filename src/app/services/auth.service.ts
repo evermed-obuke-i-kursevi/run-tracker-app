@@ -11,8 +11,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class AuthService {
 
-  // private user: User | null;
-
   private isAuthenticated: boolean;
   public authChange = new Subject<boolean>();
 
@@ -43,11 +41,9 @@ export class AuthService {
   async login(authData: AuthData) {
     try {
       const response = await this.authFirestore.signInWithEmailAndPassword(authData.email, authData.password)
-      console.log(response);
       localStorage.setItem('currentUserId', response.user?.uid as string);
       this.authSuccessfully(`You have successfully logged in.`);
     } catch (error: any) {
-      console.log(error);
       this.authUnsuccessfully(error.message)
     }
   }
@@ -60,13 +56,10 @@ export class AuthService {
   async register(authData: AuthData) {
     try {
       const response = await this.authFirestore.createUserWithEmailAndPassword(authData.email, authData.password);
-      console.log(response);
       localStorage.setItem('currentUserId', response.user?.uid as string);
       this.authSuccessfully(`Dear ${authData.email}, your account is successfully created!`)
     } catch (error: any) {
-      console.log(error);
-      this.authUnsuccessfully(error.message); // ! tekst greske uvek dolazi sa servera
-      // this.authUnsuccessfully(`Your account was not created. Please try again`);
+      this.authUnsuccessfully(error.message);
     }
   }
 

@@ -58,7 +58,6 @@ export class HistoryRunningComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnInit() {
-    // const historyData = this.runningService.getRunningHistory();
     this.pastRunningsSubscription = this.runningService.pastRunningsChanged
       .subscribe((data: Run[]) => {
         this.dataSource.data = data;

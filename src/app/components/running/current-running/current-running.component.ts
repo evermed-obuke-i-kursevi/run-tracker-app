@@ -10,7 +10,6 @@ import { StopRunningComponent } from '../../dialogs/stop-running/stop-running.co
 })
 export class CurrentRunningComponent implements OnInit {
 
-  // @Output() runStopped = new EventEmitter(); // ! not needed anymore
   progress = 0;
   timer: any;
   message = `Don't give up, you can do it!`;
@@ -21,7 +20,6 @@ export class CurrentRunningComponent implements OnInit {
 
   ngOnInit() {
     this.runningModeStarted = this.runningService.getRunningStarted();
-    console.log(`Usao u current running `, this.runningModeStarted);
     this.startOrResumeTimer();
   }
 
@@ -29,7 +27,7 @@ export class CurrentRunningComponent implements OnInit {
    * @description Method for starting or resuming run session
    */
   startOrResumeTimer() {
-    const runningTimeInSeconds = this.runningModeStarted.duration * 60; // converting minutes to seconds
+    const runningTimeInSeconds = this.runningModeStarted.duration * 60;
     const intervalTimeInMS = (runningTimeInSeconds / 100) * 1000;
     this.timer = setInterval(() => {
       this.progress += 1;

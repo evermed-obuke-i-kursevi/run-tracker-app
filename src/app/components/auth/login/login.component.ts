@@ -15,7 +15,6 @@ export class LoginComponent {
   }
 
   onSubmitLogin(form: NgForm) {
-    console.log(form);
     const {email, password} = form.value;
     const authData = {
       email,
